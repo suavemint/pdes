@@ -1,0 +1,111 @@
+% \documentclass[aps,twocolumn]{revtex4-1}
+%\documentclass[aps,reprint]{revtex4-1}
+\documentclass[aps,preprint]{revtex4-1}
+\usepackage{graphicx}
+
+\begin{document}
+
+\title{Dr Shi: update, starting 18th October 2013}
+\tableofcontents
+
+\section{Checking BZO nanorods in YBCO film substrate calculations of strain energy density}
+The calculations, which will involve finite element analysis simulations to check Dr Shi's analytical calculations, will begin from the start, including rudimentary concepts, as a learn-and-record-as-I-go document, \'{a} l\`{a} Wade's suggestion. This section will need to be reworded / rewritten.
+
+
+\section{Elasticity}
+\subsection{Mathematical preliminaries}
+\subsubsection{Conveniences}
+Elasticity theory is formulated in terms of variables that are given or are desired for spatial points in a body. Some may be scalar, such as material density ($\rho$), Poisson's ratio ($\nu$), shear modulus ($\mu$), or Young's modulus ($E$). Some others may be \emph{vector} quantities; displacement of material points in the elastic continuum, or rotation of material points are common examples. However, elasticity theory requires also \emph{matrix variables}, which require, generally, $\ge 3$ components. Examples of matrix variables are stress and strain ($6$ components (due to antisymmetry) are required to specify stress or strain at a point).
+
+A reminder of the ``Einstein'' summation notation used:
+\begin{equation}
+a_{ij}b_{j} = \sum_{i=1}^{3}a_{ij}b_{j} = a_{i1}b_{1} + a_{i2}b_{2} + a_{i3}b_{3}.
+\end{equation}
+
+List of symbol properties:
+NB: we use three-index symbols for convenience; more can and are used.
+1. Symmetric symbol:
+A symbol is \emph{symmetric} with respect to index pair $ij$ if
+\[
+a_{ijk} = a_{jik}.
+\]
+2. Antisymmetric symbol:
+A symbol is \emph{antisymmetric}, or \emph{skew symmetric} w.r.t. index pair $ij$ if
+\[
+a_{ijk} = -a_{jik}.
+\]
+
+Identity (used in some Landau relations):
+\begin{eqnarray*}
+a_{ij} = & \underbrace{\frac{1}{2}\left(a_{ij}+a_{ji}\right)}_{\text{symmetric matrix}} & + \underbrace{\frac{1}{2}\left(a_{ij}-a_{ji}\right)}_{\text{antisymmetric matrix}} & \nonumber \\
+= & a_{(ij)} & + a_{[ij]} \nonumber
+\end{eqnarray}
+\noindent In other words, and this is useful in many areas, any matrix may be written as a symmetric and antisymmetric matrix (where the word ``matrix'' shows, feel free to replace it with ``rank-$n$ tensor'').
+
+\subsubsection{Coordinate transformations}
+\begin{figure} 
+% \begin{figure}[htbp] figure placement: here, top, bottom, or page
+\includegraphics{coords} 
+\caption{\label{fig.cartesian}Change of coordinate frames in Cartesian coordinates.}
+\end{figure}
+
+To write the primed frame in terms of the unprimed frame,
+
+\begin{eqnarray}
+\vec{e_{1}}' = Q_{11}\vec{e_{1}} + Q_{12}\vec{e_{2}} + Q_{13}\vec{e_{3}} \nonumber \\
+\vec{e_{2}}' = Q_{21}\vec{e_{1}} + Q_{22}\vec{e_{2}} + Q_{23}\vec{e_{3}} \nonumber \\
+\vec{e_{3}}' = Q_{31}\vec{e_{1}} + Q_{32}\vec{e_{2}} + Q_{33}\vec{e_{3}},
+\end{eqnarray}
+
+\noindent or, in index notation,
+\[
+\vec{e_i}'=Q_{ij}\vec{e_{j}}.
+\]
+
+\noindent The inverse transform is simply (in index notation, anyway; computation may be involved)
+\[
+\vec{e_{i}} = Q_{ji}\vec{e_{j}}'
+\]
+\noindent Note that instead of the Cartesian unit vectors and coordinates $\vec{e_{i}}$, one can use rectilinear coordinates $\vec{v_{i}}$ with no loss of generality.
+
+Due to the coordinate systems being orthogonal, some constraints are put on the transforms, the most obvious being the \emph{orthogonality condition} on the transformation matrices:
+\begin{eqnarray}
+Q_{ji}Q_{jk} = \delta_{ik} = Q_{ji}Q_{kj}\\
+\Longrightarrow det Q_{ij} = \pm1.
+\end{eqnarray}
+\noindent (Rem: this is the \emph{definition} of an \emph{orthogonal matrix}.)
+
+\subsubsection{Properties of tensors}
+
+\subsubsection{Isotropic tensors}\label{isotensors}
+A tensor which has the property that its components take the \emph{same} value in all coordinate systems is called an \emph{isotropic} tensor. There are, of course, $n$ of these, for $n$-rank tensors; only the first, second, and third are of use to us in elasticity and fluid mechanics.
+
+Proposition 1.\\
+The most general second-order isotropic tensor $a_{ij}$ is, as described above, defined such that
+\begin{equation}
+a_{ij}' = \mathcal{R}_{ip}\mathcal{R}_{jq}a_{pq} = a_{ij},
+\end{equation}
+
+\noindent for arbitrary rotations of the coordinate axes. Knowing that an infinitesimal rotation may be represented as $a_{i}' = a_{i}+\epsilon_{ijk}\delta\theta_{j}a_{k}$, to first order in $\delta\theta_{i}$,
+\[
+\delta\theta_{m}\left(\epsilon_{mis}a_{sj}+\epsilon_{mjs}a_{is}\right) = 0.
+\]
+\noindent Because the $\delta\theta_{i}$ are arbitrary, we may write
+\[
+\epsilon_{mis}a_{sj}+\epsilon_{mjs}a_{is} = 0.
+\]
+\noindent Using the notorious Kronecker-Levi-\v{C}ivita identity ($\epsilon_{ijk}\epsilon_{ilm} = \delta_{jl}\delta_{km}-\delta_{jm}\delta_{kl}$),
+\begin{eqnarray}
+\left(\delta_{ii}\delta_{ks} - \delta_{is}\delta_{ki}\right)a_{sj} + \left(\delta_{ij}\delta_{ks} - \delta_{is}\delta_{kj}\right)a_{is} & = & 0\\
+2a_{ij} + a_{ji} & = & a_{ss}\delta_{ij}.
+\end{eqnarray}
+
+\]
+
+The absolute starting point for considerations of elasticity is the displacement, taken within the realm of solid bodies. The most basic (and trivial) displacement is defined as the displacement of a body coordinate, $x_i$, by some distance $x$: $u_{x} = x_i - x$. 
+
+\subsection{Rigid bodies}
+
+
+
+\end{document}
